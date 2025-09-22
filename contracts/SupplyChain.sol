@@ -70,7 +70,7 @@ contract SupplyChain {
 		require(!txn.completed, AlreadyCompleted());
 
 		txns[itemId][txns[itemId].length - 1].completed = true;
-		payable(msg.sender).transfer(txn.amount);
+		payable(txns[itemId][txns[itemId].length - 1].destination.addr).transfer(txn.amount);
 	}
 
 	function cancel(uint256 itemId) external {
