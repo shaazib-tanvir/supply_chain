@@ -9,7 +9,8 @@ error NotExpired(uint256 expirationTimestamp, uint256 currentTimestamp);
 
 contract SupplyChain {
 	struct User {
-		int16 reputation;
+		int64 reputation;
+		mapping(address => bool) delegatedRp;
 	}
 
 	struct ItemMetadata {
@@ -70,6 +71,8 @@ contract SupplyChain {
 		require(!txn.completed, AlreadyCompleted());
 
 		txns[itemId][txns[itemId].length - 1].completed = true;
+		users[msg.sender].reputation += 1;
+		users[txns[itemId][txns[itemId].length - 1].destination.addr].reputation += 1;
 		payable(txns[itemId][txns[itemId].length - 1].destination.addr).transfer(txn.amount);
 	}
 
@@ -80,6 +83,9 @@ contract SupplyChain {
 		require(!txn.completed, AlreadyCompleted());
 		require(txn.expirationTimestamp <= block.timestamp, NotExpired(txn.expirationTimestamp, block.timestamp));
 
+		address destinationAddress = txns[itemId][txns[itemId].length - 1].destination.addr;
+		users[msg.sender].delegatedRp[destinationAddress] = true;
+		users[destinationAddress].delegatedRp[msg.sender] = true;
 		txns[itemId].pop();
 	}
 }
