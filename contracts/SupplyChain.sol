@@ -72,7 +72,7 @@ contract SupplyChain {
 		Txn memory txn = txns[itemId][txns[itemId].length - 1];
 
 		require(!txn.completed);
-		require(txn.expirationTimestamp > block.timestamp);
+		require(txn.expirationTimestamp <= block.timestamp);
 
 		txns[itemId].pop();
 	}
