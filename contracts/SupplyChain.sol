@@ -1,6 +1,12 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.28;
 
+error ZeroTransaction();
+error PendingTransaction();
+error AlreadyCompleted();
+error NoTransactionFound();
+error NotExpired(uint256 expirationTimestamp, uint256 currentTimestamp);
+
 contract SupplyChain {
 	struct User {
 		int16 reputation;
@@ -35,9 +41,9 @@ contract SupplyChain {
 				 int32 destinationLongitude,
 				 ItemMetadata calldata item,
 				 uint256 completionTime,
-				 address payable destination) payable external {
-		require(msg.value > 0);
-		require(txns[item.id].length == 0 || txns[item.id][txns[item.id].length - 1].completed);
+				 address payable destination) external payable {
+		require(msg.value > 0, ZeroTransaction());
+		require(txns[item.id].length == 0 || txns[item.id][txns[item.id].length - 1].completed, PendingTransaction());
 
 		Txn memory txn = Txn({
 			source: Point({
@@ -59,20 +65,20 @@ contract SupplyChain {
 	}
 
 	function acknowledge(uint256 itemId) external {
-		require(txns[itemId].length > 0);
+		require(txns[itemId].length > 0, NoTransactionFound());
 		Txn memory txn = txns[itemId][txns[itemId].length - 1];
-		require(!txn.completed);
+		require(!txn.completed, AlreadyCompleted());
 
-		payable(msg.sender).transfer(txn.amount);
 		txns[itemId][txns[itemId].length - 1].completed = true;
+		payable(msg.sender).transfer(txn.amount);
 	}
 
 	function cancel(uint256 itemId) external {
-		require(txns[itemId].length > 0);
+		require(txns[itemId].length > 0, NoTransactionFound());
 		Txn memory txn = txns[itemId][txns[itemId].length - 1];
 
-		require(!txn.completed);
-		require(txn.expirationTimestamp <= block.timestamp);
+		require(!txn.completed, AlreadyCompleted());
+		require(txn.expirationTimestamp <= block.timestamp, NotExpired(txn.expirationTimestamp, block.timestamp));
 
 		txns[itemId].pop();
 	}
