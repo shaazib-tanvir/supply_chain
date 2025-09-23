@@ -6,6 +6,7 @@ error PendingTransaction();
 error AlreadyCompleted();
 error NoTransactionFound();
 error NotExpired(uint256 expirationTimestamp, uint256 currentTimestamp);
+error NoReputationPoints();
 
 contract SupplyChain {
 	struct User {
@@ -87,5 +88,14 @@ contract SupplyChain {
 		users[msg.sender].delegatedRp[destinationAddress] = true;
 		users[destinationAddress].delegatedRp[msg.sender] = true;
 		txns[itemId].pop();
+	}
+
+	function vote(address person, bool positive) external {
+		require(users[msg.sender].delegatedRp[person], NoReputationPoints());
+		if (positive) {
+			users[person].reputation += 1;
+		} else {
+			users[person].reputation -= 1;
+		}
 	}
 }
