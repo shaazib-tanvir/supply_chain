@@ -25,11 +25,10 @@ contract SupplyChainTest is Test {
 						  int32 destinationLongitude,
 						  SupplyChain.ItemMetadata calldata item,
 						  uint256 completionTime,
-						  uint256 amount,
 						  address payable destination) public {
 		bool failing = false;
 		unchecked {
-			if (completionTime + block.timestamp < completionTime || amount + address(supplyChain).balance < amount || address(this).balance < amount) {
+			if (completionTime + block.timestamp < completionTime) {
 				failing = true;
 			}
 		}
@@ -39,12 +38,17 @@ contract SupplyChainTest is Test {
 		}
 
 		uint256 previousBalance = address(supplyChain).balance;
-		supplyChain.pay{value: amount}(sourceLatitude, sourceLongitude, destinationLatitude, destinationLongitude, item, completionTime, destination);
+		supplyChain.pay{value: 100}(sourceLatitude, sourceLongitude, destinationLatitude, destinationLongitude, item, completionTime, destination);
 		uint256 newBalance = address(supplyChain).balance;
 		if (!failing) {
-			assertEq(newBalance, amount + previousBalance);
+			assertEq(newBalance, 100 + previousBalance);
 		} else {
 			assertEq(newBalance, previousBalance);
 		}
+	}
+
+	function test_FuzzAcknowledgeFailing(uint256 id) public {
+		vm.expectRevert();
+		supplyChain.acknowledge(id);
 	}
 }
