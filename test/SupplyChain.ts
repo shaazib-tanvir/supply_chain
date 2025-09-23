@@ -61,4 +61,69 @@ describe("Supply Chain", async function() {
 		})
 		assert.equal(newBalance, parseEther("10"))
 	})
+
+	it("Pay And Cancel", async function() {
+		const source = "0xeeea83374b145ce7d04c2d129dedfea30142112b"
+		const destination = "0xe4470ddcfad1027d088a5b59973eee355d292715"
+		await testClient.impersonateAccount({
+			address: source
+		})
+		await testClient.impersonateAccount({
+			address: destination
+		})
+		testClient.setBalance({
+			address: source,
+			value: parseEther("1000"),
+		})
+		testClient.setBalance({
+			address: destination,
+			value: parseEther("0"),
+		})
+
+		const supplyChain = await viem.deployContract("SupplyChain")
+		const id = BigInt("0x1d8e5d47af61bf3136e9fb2b8e3756e4238b1b44732431c45b9c6f4a77f762f6")
+		await supplyChain.write.pay([0, 0, 0, 0, {id: id, name: "Banana"}, BigInt(1000), destination], {
+			account: parseAccount(source),
+			value: parseEther("10"),
+		})
+		await testClient.increaseTime({
+			seconds: 1000,
+		})
+		await supplyChain.write.cancel([id], {
+			account: parseAccount(source),
+		})
+	})
+
+	it("Pay and Cancel Fail", async () => {
+		const source = "0xeeea83374b145ce7d04c2d129dedfea30142112b"
+		const destination = "0xe4470ddcfad1027d088a5b59973eee355d292715"
+		await testClient.impersonateAccount({
+			address: source
+		})
+		await testClient.impersonateAccount({
+			address: destination
+		})
+		testClient.setBalance({
+			address: source,
+			value: parseEther("1000"),
+		})
+		testClient.setBalance({
+			address: destination,
+			value: parseEther("0"),
+		})
+
+		const supplyChain = await viem.deployContract("SupplyChain")
+		const id = BigInt("0x1d8e5d47af61bf3136e9fb2b8e3756e4238b1b44732431c45b9c6f4a77f762f6")
+		await supplyChain.write.pay([0, 0, 0, 0, {id: id, name: "Banana"}, BigInt(1000), destination], {
+			account: parseAccount(source),
+			value: parseEther("10"),
+		})
+		await viem.assertions.revertWithCustomError(
+			supplyChain.write.cancel([id], {
+				account: parseAccount(source),
+			}),
+			supplyChain,
+			"NotExpired"
+		)
+	})
 })
