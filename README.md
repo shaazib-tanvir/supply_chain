@@ -6,7 +6,7 @@ To learn more about the Hardhat 3 Beta, please visit the [Getting Started guide]
 
 ## Specification
 
-A formal specification of the smart contract in TLA<sup>+</sup> ![can be  found here](https://drive.google.com/file/d/1SCt3iBKSXXiv63C-1b1NnscHmr_jlir6/view?usp=sharing).
+A formal specification of the smart contract in TLA<sup>+</sup> [can be  found here](https://drive.google.com/file/d/1SCt3iBKSXXiv63C-1b1NnscHmr_jlir6/view?usp=sharing).
 
 ## Project Overview
 
