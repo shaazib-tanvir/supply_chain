@@ -7,6 +7,7 @@ error AlreadyCompleted();
 error NoTransactionFound();
 error NotExpired(uint256 expirationTimestamp, uint256 currentTimestamp);
 error NoReputationPoints();
+error SenderNotSource(address sender, address source);
 
 contract SupplyChain {
 	struct User {
@@ -83,6 +84,8 @@ contract SupplyChain {
 
 		require(!txn.completed, AlreadyCompleted());
 		require(txn.expirationTimestamp <= block.timestamp, NotExpired(txn.expirationTimestamp, block.timestamp));
+		address sourceAddress = txns[itemId][txns[itemId].length - 1].source.addr;
+		require(sourceAddress == msg.sender, SenderNotSource(msg.sender, sourceAddress));
 
 		address destinationAddress = txns[itemId][txns[itemId].length - 1].destination.addr;
 		users[msg.sender].delegatedRp[destinationAddress] = true;
