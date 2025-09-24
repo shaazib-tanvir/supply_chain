@@ -21,3 +21,6 @@
 
 # venv for slither
 /venv
+
+# gitignore compiler
+solc
