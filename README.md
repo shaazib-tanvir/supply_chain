@@ -4,11 +4,14 @@ This project showcases a Hardhat 3 Beta project using the native Node.js test ru
 
 To learn more about the Hardhat 3 Beta, please visit the [Getting Started guide](https://hardhat.org/docs/getting-started#getting-started-with-hardhat-3). To share your feedback, join our [Hardhat 3 Beta](https://hardhat.org/hardhat3-beta-telegram-group) Telegram group or [open an issue](https://github.com/NomicFoundation/hardhat/issues/new) in our GitHub issue tracker.
 
+## Specification
+
+A formal specification of the smart contract in TLA<sup>+</sup> ![can be  found here](https://drive.google.com/file/d/1SCt3iBKSXXiv63C-1b1NnscHmr_jlir6/view?usp=sharing).
+
 ## Project Overview
 
-This example project includes:
-
-- A simple Hardhat configuration file.
+This project includes
+- A supply chain smart contract
 - Foundry-compatible Solidity unit tests.
 - TypeScript integration tests using [`node:test`](nodejs.org/api/test.html), the new Node.js native test runner, and [`viem`](https://viem.sh/).
 - Examples demonstrating how to connect to different types of networks, including locally simulating OP mainnet.
