@@ -1,6 +1,11 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.28;
 
+event NewTransaction(address source, address destination, uint256 id);
+event CancelledTransaction(uint256 id);
+event CompletedTransaction(uint256 id);
+event ReceivedVote(address receiver);
+
 error ZeroTransaction();
 error PendingTransaction();
 error AlreadyCompleted();
@@ -65,6 +70,7 @@ contract SupplyChain {
 			completed: false
 		});
 		txns[item.id].push(txn);
+		emit NewTransaction(msg.sender, destination, item.id);
 	}
 
 	function acknowledge(uint256 itemId) external {
@@ -76,6 +82,7 @@ contract SupplyChain {
 		users[msg.sender].reputation += 1;
 		users[txns[itemId][txns[itemId].length - 1].destination.addr].reputation += 1;
 		payable(txns[itemId][txns[itemId].length - 1].destination.addr).transfer(txn.amount);
+		emit CompletedTransaction(itemId);
 	}
 
 	function cancel(uint256 itemId) external {
@@ -91,6 +98,7 @@ contract SupplyChain {
 		users[msg.sender].delegatedRp[destinationAddress] = true;
 		users[destinationAddress].delegatedRp[msg.sender] = true;
 		txns[itemId].pop();
+		emit CancelledTransaction(itemId);
 	}
 
 	function vote(address person, bool positive) external {
@@ -100,5 +108,7 @@ contract SupplyChain {
 		} else {
 			users[person].reputation -= 1;
 		}
+
+		emit ReceivedVote(person);
 	}
 }
