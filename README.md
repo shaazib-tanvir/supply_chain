@@ -5,7 +5,7 @@ This is a submission to Smart India Hackathon 2025 problem statement SIH25045.
 
 ## Specification
 
-A formal specification of the smart contract in TLA<sup>+</sup> [can be  found here](https://drive.google.com/file/d/1SCt3iBKSXXiv63C-1b1NnscHmr_jlir6/view?usp=sharing).
+A formal specification of the smart contract in TLA<sup>+</sup> [can be  found here](supply_chain.pdf).
 
 ## Project Overview
 
