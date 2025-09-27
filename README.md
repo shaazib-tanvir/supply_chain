@@ -10,6 +10,10 @@ A technical overview of the smart contract can be found [here](technical_details
 
 A formal specification of the smart contract in TLA<sup>+</sup> [can be  found here](supply_chain.pdf).
 
+## Frontend Design
+
+The frontend design of the application can be found [here](https://www.figma.com/site/Q70y5vFrlnL0XYa6i5ScSD/).
+
 ## Project Overview
 
 This project includes
