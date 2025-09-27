@@ -1,4 +1,4 @@
-# Blockchain Supply Chain Transparency
+# AgroChain
 This project showcases a smart contract that can be used to implement a transparent supply chain with no trusted central authority.
 
 This is a submission to Smart India Hackathon 2025 problem statement SIH25045.
