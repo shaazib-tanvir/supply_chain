@@ -13,6 +13,7 @@ A formal specification of the smart contract in TLA<sup>+</sup> [can be  found h
 ## Frontend Design
 
 The frontend design of the application can be found [here](https://www.figma.com/site/Q70y5vFrlnL0XYa6i5ScSD/).
+The user dashboard can be seen here : 
 
 ## Project Overview
 
