@@ -13,7 +13,7 @@ A formal specification of the smart contract in TLA<sup>+</sup> [can be  found h
 ## Frontend Design
 
 The frontend design of the application can be found [here](https://www.figma.com/site/Q70y5vFrlnL0XYa6i5ScSD/).
-The design for user dashboard can be found [here](https://www.figma.com/design/rfbAfukr0hZPKQbKCV6UEF/AgroChain-Dashboard-ui?node-id=0-1&t=I7CAz6rAE0uTi8D5-1).
+The design for user dashboard can be found [here](https://www.figma.com/design/rfbAfukr0hZPKQbKCV6UEF/AgroChain-Dashboard-ui?node-id=0-1&t=vDkM9JXhbbGtopcq-1).
 
 ## Project Overview
 
