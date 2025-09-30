@@ -3,6 +3,8 @@ This project showcases a smart contract that can be used to implement a transpar
 
 This is a submission to Smart India Hackathon 2025 problem statement SIH25045.
 
+https://www.youtube.com/watch?v=QtRG01lstko&list=PLbipqM3jUdNmxvDdmjlXhlVp8OZ46LBiA
+
 ## Technical Overview
 A technical overview of the smart contract can be found [here](technical_details.pdf).
 
